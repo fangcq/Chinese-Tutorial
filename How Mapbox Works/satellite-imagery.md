@@ -34,7 +34,7 @@ Imagery of Tropical Cyclone Debbie off the coast of Australia in the spring of 2
 ![diagram of electromagnetic spectrum](/help/img/satellite/rasters-emspectrum.png)
 
 <div class='caption' markdown='1'>
-**Source**: Comparison of wavelength, frequency and energy for the electromagnetic spectrum.” Digital image. The Electromagnetic Spectrum. March 2013. Accessed June 2017. [https://imagine.gsfc.nasa.gov/science/toolbox/emspectrum1](https://imagine.gsfc.nasa.gov/science/toolbox/emspectrum1.html).
+Source: Comparison of wavelength, frequency and energy for the electromagnetic spectrum.” Digital image. The Electromagnetic Spectrum. March 2013. Accessed June 2017. [https://imagine.gsfc.nasa.gov/science/toolbox/emspectrum1](https://imagine.gsfc.nasa.gov/science/toolbox/emspectrum1.html).
 </div>
 
 <!--copyeditor ignore previously-->
