@@ -37,7 +37,7 @@ Mapbox 静态图片 API 允许你以静态图片的形式请求你Mapbox账户�
 
 Mapbox Studio 允许每个账户使用 [打印面板](https://docs.mapbox.com/studio-manual/reference/styles/#print-panel)输出100张高分辨率图片。如果你想获取更多数量的图片输出请联系 [Mapbox 销售](https://www.mapbox.com/contact/sales)。
 
-使用 Mapbox 静态图片 API， 图片导出尺寸可高达 1,280&nbsp;px x 1,280&nbsp;px 。你能够通过开启retina 以提高图片质量，但是你无法通过使用静态图片 API导出比这更高的分辨率图片了 ，而且我们也不支持导出矢量图片格式。
+使用 Mapbox 静态图片 API， 图片导出尺寸可高达 1280&nbsp;px*1280&nbsp;px 。你能够通过开启retina 以提高图片质量，但是你无法通过使用静态图片 API导出比这更高的分辨率图片了 ，而且我们也不支持导出矢量图片格式。
 
 ### 用于印刷的静态图片
 
@@ -75,7 +75,7 @@ PNG, JPG<br>high-resolution | [Mapbox Studio](https://www.mapbox.com/studio-manu
 
 ### Mapbox Studio
 
-Mapbox Studio 打印面板 允许你导出高分辨率自定义地图样式。 点击 {{<Icon name='printer' inline={true} />}} 打印图标以切换打印面板的开关。 在打印面板中可以调整地图位置和 **打印输出设置** 。设置包含图片尺寸 (单位英寸 或 厘米)，分辨率 (单位像素或英寸)，以及文件格式 (PNG 或 JPG). 最大的图片导出尺寸是 8,000&nbsp;px x 8,000&nbsp;px。
+Mapbox Studio 打印面板 允许你导出高分辨率自定义地图样式。 点击 {{<Icon name='printer' inline={true} />}} 打印图标以切换打印面板的开关。 在打印面板中可以调整地图位置和 **打印输出设置** 。设置包含图片尺寸 (单位英寸 或 厘米)，分辨率 (单位像素或英寸)，以及文件格式 (PNG 或 JPG). 最大的图片导出尺寸是 8000&nbsp;px*8000&nbsp;px。
 
 关于打印面板的详细信息请阅读 [Mapbox Studio 手册](https://www.mapbox.com/studio-manual/reference/styles/#print-panel).
 
