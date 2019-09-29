@@ -7,83 +7,83 @@ topics:
 contentType: guide
 ---
 
-Mapbox allows you to upload your own custom data to be converted into a **tileset** or **dataset**. This guide outlines the differences between tilesets and datasets, how the upload process works, techniques for uploading, and resources for getting started.
+Mapbox 允许用户上传自定义数据并转换成**tileset**或**dataset**格式。这篇指南概述了瓦片集和数据集之间的区别、数据上传程序是如何工作的、上传的技巧以及入门所需的资源。
 
 <!-- <div style='width:100%;height:300px;background-color:#eee' class='mb24'></div> -->
 
-## How uploads work
+## 上传进程如何工作
 
-Mapbox stores your data in formats that are optimized for display in interactive web maps. Depending on the type of data you upload and the desired use case, your data will either be stored as raw [GeoJSON](/help/glossary/geojson/) or will be processed into a raster or vector [tileset](/help/glossary/tileset/).
+Mapbox将用户的数据以一种优化的格式存储，以便在交互式的web地图中流畅显示。根据上传的数据类型和所需的实例，用户的数据将被保存为原生的 [GeoJSON](/help/glossary/geojson/) 或者处理成栅格和矢量的 [tileset](/help/glossary/tileset/)。
 
-There are two possible avenues for uploading data to your Mapbox account, each of which comes with its own set of considerations:
+有两种方法可以将数据上传到用户的Mapbox帐户，每种方法都有相应的注意事项：
 
-- The [Mapbox Uploads API](https://docs.mapbox.com/api/maps/#uploads) is designed to accept many common geospatial file types, which, when uploaded, are automatically processed into [vector tiles](/help/glossary/vector-tiles/). Tilesets can be uploaded via the Tilesets page in Mapbox Studio or programmatically using the Mapbox Uploads API. A tileset can be created from uploaded data, or it can be created from an existing [dataset](/help/glossary/dataset).
-- The [Mapbox Datasets API](https://docs.mapbox.com/api/maps/#datasets) is designed to store raw [GeoJSON](/help/glossary/geojson/) as datasets. Datasets can be uploaded via the Datasets page in Mapbox Studio or programmatically using the Mapbox Datasets API.
+- [Mapbox Uploads API](https://docs.mapbox.com/api/maps/#uploads) 在设计上可以接受大部分常见的地理空间数据类型的文件，当它们上传时, 会被自动处理为 [vector tiles](/help/glossary/vector-tiles/)。 瓦片集可以通过 Mapbox Studio 的瓦片集页面上传，也可以通过 Mapbox Uploads API 程序化地上传。瓦片集数据可以从上传的数据中产生，也可以从已有的[dataset](/help/glossary/dataset)中产生。
+- [Mapbox Datasets API](https://docs.mapbox.com/api/maps/#datasets) 设计将原生的[GeoJSON](/help/glossary/geojson/) 数据储存为数据集。数据集可以通过 Mapbox Studio 的数据集页面上传，也可以通过 Mapbox Datasets API 程序化地上传。
 
-The following section provides a more detailed comparison of the Mapbox Uploads API and Datasets APIs.
-
+接下来的章节将提供 Mapbox Uploads API 和 Datasets APIs 之间的更详细区别。
 
 ### Datasets vs. tilesets
 
-[**Datasets**](/help/glossary/dataset) and [**tilesets**](/help/glossary/tileset) are two different types of files that you can create when uploading data to your Mapbox account. Datasets are editable and tilesets are styleable.
+[**Datasets**](/help/glossary/dataset) 和 [**tilesets**](/help/glossary/tileset) 是两种不同的文件类型，用户可以在上传数据到自己的 Mapbox 账户时创建。数据集是可编辑的，瓦片集是样式可变的。
 
-**Datasets** provide access to feature geometries (points, lines, and polygons) and properties (attributes), both of which **can be edited** in the Mapbox Studio [dataset editor](https://www.mapbox.com/studio/datasets/) or through the Mapbox [Datasets API](https://docs.mapbox.com/api/maps/#datasets).
+**Datasets** 提供对地理要素（点、线、多边形）和其属性的访问，并且都能在 Mapbox Studio [dataset editor](https://www.mapbox.com/studio/datasets/) 或者通过 Mapbox [Datasets API](https://docs.mapbox.com/api/maps/#datasets)进行 **编辑**。
 
-Consider using a dataset if you are working with less complex data that needs to be updated often. It is important to note that once your dataset has been created, it will need to be published into a tileset to be added to a style in the Mapbox Studio style editor. With datasets, you can continue to make changes to your data as needed, publish each update to the connected tileset, and see those changes reflected in any styles that contain that tileset.
+如果你正在处理需要经常更新且不太复杂的数据，请考虑使用dataset。需要注意的是，一旦创建了数据集，就需要将其发布成瓦片集，并在 Mapbox Studio 的样式编辑器中给瓦片集添加样式。通过数据集，用户可以继续修改数据，将每次的更新数据发布到相关联的瓦片集，这样就能看到该瓦片集在任何样式模式同步改变了。
 
-![animated GIF of editing dataset in the Mapbox Studio dataset editor](/help/img/studio/dataset-modify-feature.gif)
+![在Mapbox Studio 数据集编辑器中编辑数据集的动画GIF](/help/img/studio/dataset-modify-feature.gif)
 
-**Tilesets** are lightweight collections of vector data that are optimized for rendering and are not *editable* but can be *styled* in the Mapbox Studio style editor. Consider uploading your data as a tileset if your data is large and doesn't need to be updated often.
+**Tilesets**是矢量数据的轻量级集合，针对渲染效果进行了优化且不可*编辑*，但可以在 Mapbox Studio 样式编辑器中设置
+*样式*。如果你的数据量很大且不需要经常更新，可以考虑将数据作为tileset上传。
 
-![animated GIF of a tileset in the Mapbox Studio style editor](/help/img/studio/tileset-upload.gif)
+![在Mapbox Studio 样式编辑器中显示瓦片集的GIF动画](/help/img/studio/tileset-upload.gif)
 
-### How data becomes a tileset
+### 数据如何变成瓦片集
 
-When you upload data as a tileset or export a dataset as a tileset, Mapbox breaks it up into a uniform grid of square tiles at preset zoom levels. It must undergo many processing steps to load quickly and be lightweight. These are the same processes [Mapbox Streets](https://www.mapbox.com/vector-tiles/) data undergoes before it becomes the global Mapbox Streets tileset you may be familiar with. When data becomes a tileset, two things happen:
+当你把数据以瓦片集的格式上传或者以瓦片集的形式导出时，Mapbox 会在预设的缩放级别将它分割成统一的正方形平铺网格。这些数据想要变的轻量级且能快速加载，必须经过许多处理步骤。[Mapbox Streets](https://www.mapbox.com/vector-tiles/) 的数据在变成你可能熟悉的全球 Mapbox 街道瓦片集之前，也经理了相同的过程。当数据变成瓦片集，两件事将会发生：
 
-**1. Simplification**
+**1. 简化**
 
-The Mapbox Uploads API analyzes your data for complexity and automatically removes unnecessary vertices at variable rates depending on zoom level. This process is called *simplification*, and it helps make sure your maps load quickly, especially at lower zoom levels where additional complexity would not be visible.
+Mapbox Uploads API 会分析数据的复杂度，并根据缩放层级以一定的比例自动删除多余的节点。这个过程叫做 *简化*，这能帮助你的地图更快地加载，尤其在小比例尺的级别下额外的复杂数据根本不会展示。
 
-**2. Determining the zoom extent**
+**2. 确定缩放范围**
 
-The Mapbox Uploads API keeps your tilesets light by examining your data's extent (the geographic area covered by your data) and complexity and only creates vector tiles for zoom levels that are likely to be required &mdash; a [zoom extent](/help/glossary/zoom-extent/) is defined. For datasets with small zoom extents or complex features, this usually means low zoom levels (zoomed out) will be discarded. For large features that are not complex, this usually means higher zoom levels (zoomed in) will be discarded.
+Mapbox Uploads API 通过检查数据的范围(数据所覆盖的地理区域)和复杂性来保持瓦片集的轻量级，并且只为可能需要的缩放级别创建对应的矢量切片 &mdash;[zoom extent](/help/glossary/zoom-extent/) 是已经确定的。对于有着复杂的要素或有小比例尺缩放级别的数据，通常意味着小比例尺级别（缩小）的数据会被丢弃。对于结构比较简单的大面积要素，这通常意味着大比例尺级别（放大）的数据会被丢弃。
 
-If you need your tileset to be visible at a different zoom extent, you can [adjust this manually](/help/troubleshooting/adjust-tileset-zoom-extent/), but it is important to note the following:
+如果需要将瓦片集在不同的缩放级别都能展示，你可以[手动调节](/help/troubleshooting/adjust-tileset-zoom-extent/), 但是请注意下方的信息：
 
-- Minimum zoom levels can be increased, but not decreased past the assigned minimum zoom level.
-- Maximum zoom levels can be decreased and increased, since data can be [overzoomed](/help/glossary/overzoom/) and visualized to zoom 22.
+- 最小缩放级别可以增加，但不能少于已经指定的最小缩放级别。
+- 最大缩放级别可以减少也可以增加，因为数据可以 [overzoomed](/help/glossary/overzoom/) 并且到22级一直可见。
 
-### Raster and vector tilesets
+### 栅格和矢量瓦片集
 
-Tilesets can be created with raster or vector data.
+用户可以使用栅格或者矢量数据来创建瓦片集。
 
-If you upload raster data (such as a GeoTIFF), the resulting raster tilesets will only contain raster data, a [pixel-based](https://en.wikipedia.org/wiki/Raster_graphics) data format that all digital photographs conform to.
+如果你上传了栅格数据（比如 GeoTIFF ），生成的栅格瓦片集将只包含栅格数据，这是一种 [基于像素](https://en.wikipedia.org/wiki/Raster_graphics)的、符合所有数码照片标准的数据格式。
 
-If you upload vector data, this will create a vector tileset containing vector data, which consists of mathematically calculated points, lines, and polygons as x/y pairs. [Mapbox GL](/help/glossary/mapbox-gl/) takes advantage of vector tilesets by calculating and rendering vector data directly in your browser.
+如果你上传了矢量数据，将会生成包含矢量数据的矢量瓦片集，其中包含以 x/y 点串形式储存的点、线、多边形。 [Mapbox GL](/help/glossary/mapbox-gl/) 可以将矢量数据直接在浏览器进行计算和渲染，所以对处理矢量瓦片集很有优势。
 
-### What you can do with tilesets
+### 你可以用瓦片集做什么
 
-If you created a vector tileset by uploading geospatial data that contains attributes, the resulting vector tileset will inherit the attributes contained in your raw data source. Here are a few examples of what you can do with the attributes belonging to features in a vector tileset:
+如果通过上传带有属性的地理空间数据来创建矢量瓦片集，则生成的矢量瓦片集将继承原始数据源中包含的属性。用矢量瓦片集中的要素属性可以做些什么，这里有一部分示例：
 
-- Use [Mapbox Studio](/help/tutorials/choropleth-studio-gl-pt-1/) to customize the color of a state based on its population density.
-- Use the [Mapbox Maps SDK for iOS](https://www.mapbox.com/ios-sdk/examples/dds-circle-layer/) to dynamically style trees based on an `AGE` attribute.
-- Use [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/example/query-similar-features/) to highlight counties share a similar name.
+- 使用 [Mapbox Studio](/help/tutorials/choropleth-studio-gl-pt-1/) 根据人口密度来定义一个州显示什么颜色。
+- 使用 [Mapbox Maps SDK for iOS](https://www.mapbox.com/ios-sdk/examples/dds-circle-layer/)根据 `年龄` 属性动态地改变树的样式 。
+- 使用 [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/example/query-similar-features/) 高亮有着相同名称的郡县数据。
 
-## Uploading data
+## 上传数据
 
-There are several ways you can upload custom data as tilesets or datasets.
+这里几种方法让用户能够上传自定义数据，来生成瓦片集或者数据集。
 
 ### Mapbox Studio
 
-You can upload both tilesets and datasets to Mapbox Studio. Upload data as a tilesets using the [Tilesets page](https://www.mapbox.com/studio/tilesets/) in Mapbox Studio. Upload your own data as a dataset on the [Dataset page](https://www.mapbox.com/studio/datasets) in Mapbox Studio. You can also create a blank dataset and draw data directly in your browser using the Mapbox Studio dataset editor. For more information on how to create data from scratch in Mapbox Studio see [Create new data](/help/how-mapbox-works/creating-data/).
+用户可以将瓦片集和数据集上传到 Mapbox Studio。如果数据以瓦片集形式上传请使用 Mapbox Studio 中的 [Tilesets page](https://www.mapbox.com/studio/tilesets/)。若用户将自己的数据以数据集的形式上传请使用 Mapbox Studio 中的 [Dataset page](https://www.mapbox.com/studio/datasets)。你还可以创建一个空白数据集，并使用Mapbox Studio 数据集编辑器在浏览器中直接绘制数据。更多信息有关如何在 Mapbox Studio 中从零开始创建数据，请参见 [创建新数据](/help/how-mapbox-works/creating-data/)。
 
-Learn more about accepted file types, transfer limits, and how to manage data in the [Mapbox Studio manual Uploads section](https://www.mapbox.com/studio-manual/overview/geospatial-data/).
+想要了解更多信息关于可接受文件类型、传输限制以及如何管理数据，请见[Mapbox Studio 手动上传章节](https://www.mapbox.com/studio-manual/overview/geospatial-data/)。
 
 ### Mapbox Uploads API
 
-You can use the Mapbox Uploads API directly to create both raster and vector tilesets programmatically. For more details on how to upload your custom data, see the [Mapbox Uploads API](https://docs.mapbox.com/api/maps/#uploads) documentation.
+用户可以使用 Mapbox Uploads API 直接以编程的方式创建栅格或矢量瓦片集。关于如何上传自定义数据的详细信息，请参阅 [Mapbox Uploads API](https://docs.mapbox.com/api/maps/#uploads) 文档。
 
 ### Mapbox Datasets API
 
-You can use the Mapbox Datasets API directly to create, edit, and manage datasets programmatically. For more details on how to create and work with datasets, see the [Mapbox Datasets API](https://docs.mapbox.com/api/maps/#datasets) documentation.
+用户可以使用 Mapbox Datasets API 直接以编程的方式来创建、编辑和管理数据集。关于如何创建和处理数据集的详细信息，请参阅 [Mapbox Datasets API](https://docs.mapbox.com/api/maps/#datasets) 文档。
