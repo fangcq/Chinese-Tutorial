@@ -9,8 +9,7 @@ prependJs:
 文章类别: 教程
 ---
 
-空间分析包含用于理解地理学特征的模式和关系的各种技术和过程. [Turf](http://turfjs.org/) 是一个允许你在浏览器中执行空间操作的高级地理空间JavaScript开源库. Turf 帮助你分析、聚合和转换数据，以便以新的可视化方式呈现，并解答一些高级进阶的问题. 这篇教程概述了如何使用Turf进行空间分析，如何在应用程序中使用Turf，以及相关的文档来帮助你入门.
-
+空间分析包含用于理解地理学特征的模式和关系的各种技术和过程. [Turf](http://turfjs.org/) 是一个允许你在浏览器中执行空间操作的高级地理空间JavaScript开源库. Turf 帮助你分析、聚合和转换数据，以便以新的可视化方式呈现，并解答一些高级进阶的问题. 这篇教程提供了如何使用Turf进行空间分析，如何在应用程序中使用Turf的概述，以及相关的文档来帮助你入门。
 <div class='bg-white border-b'>
   <div class='txt-m txt-bold'>在浏览器中执行空间分析</div>
   <div class='txt-xs pb6'>点击地图上的点画线并用 turf.lineDistance来测量线的距离.</div>
@@ -74,7 +73,7 @@ var twoHundredMilesOut = turf.buffer(nullIsland, 200, { unit: 'miles' });
 
 - **测量方法Measurement methods** 可以测量距离, 新建特征, 和计算大小. 比如, 使用测量方法, 您不仅可以确定Austin市的确切中心点 (使用 [turf-centroid](http://turfjs.org/docs#centroid), 还可以测量那个点和市政厅之间的距离 (使用 [turf-distance](http://turfjs.org/docs#distance)).
 
-- **转换方法Transformation methods** 用来解决空间问题. 如果你需要购买同时距离公园和公交站内一英里范围内的房子, 你可以用转换方法中[ [turf-intersect](http://turfjs.org/docs#intersect)发现这些叠加的区域, 这时一种转换的方法.
+- **转换方法Transformation methods** 用来解决空间问题. 如果你需要购买同时距离公园和公交站内一英里范围的房子, 你可以用转换方法中[ [turf-intersect](http://turfjs.org/docs#intersect)发现这些叠加的区域, 这时一种转换的方法.
 
 - **数据方法Data methods** 可以从 *随机* 的大量特征中形成随机点或样本. 比如, 使用 [turf-sample](http://turfjs.org/docs#sample) 从数百的位置数据中列出子系列商店的位置.
 
