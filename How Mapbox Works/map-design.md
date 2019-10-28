@@ -1,78 +1,78 @@
 ---
-title: Map design
-description: Learn how Mapbox styles work and where you can go to learn more and get started designing your map.
-image: /img/narrative/design.svg
-topics:
-  - map design
+标题: 地图设计
+描述: 学习Mapbox样式的工作原理的以及从哪里学到更多信息并开始设计你的地图.
+图像: /img/narrative/design.svg
+主题:
+  - 地图设计
 prependJs:
   - "import DemoIframe from '@mapbox/dr-ui/demo-iframe';"
-contentType: guide
+内容类型: 教程
 ---
 
-You can use Mapbox to control nearly every aspect of the map design process, including uploading custom data, tweaking your map's color scheme, adding your font, creating data-driven visualizations, and more. The core of the map design process is the **style**: a document, written in JSON, that defines exactly how your map should be drawn. Because all Mapbox styles conform to the open source [Mapbox Style Specification](https://www.mapbox.com/mapbox-gl-js/style-spec/), your maps can be rendered consistently across multiple platforms, including on the web with Mapbox GL JS, the Mapbox Static Images API, on mobile with the Mapbox Maps SDKs for Android and iOS, and with any third party libraries that are designed to read Mapbox styles. This guide explains how Mapbox styles work and where you can go to learn more and get started designing your map.
+你能用Mapbox控制地图设计过程中的几乎每个方面，包括上传自定义数据，调整地图配色方案，添加字体，新建数据驱动的可视化等等。地图设计过程的核心是 **样式**: 用一个准确定义如何绘制地图的JSON文件。因为所有的Mapbox样式符合开放资源[Mapbox 样式规范](https://www.mapbox.com/mapbox-gl-js/style-spec/), 你的地图能在多个平台上一致地呈现，包括在网页版Mapbox GL JS，Mapbox静态图像API，在移动设备上适用于Android和iOS的Mapbox地图SDK，以及任何能读取Mapbox样式的第三方库。这个教程介绍了Mapbox样式的工作原理以及你可以在哪里了解更多信息并开始设计你的地图.
 
 {{
   <DemoIframe src="/help/demos/how-mapbox-works/how-styles-work.html" />
 }}
 
-Style documents, or Style JSON, contain style rules that are used by a renderer to display the map you see in your browser or device. In this example, you can see references to the style's data and images and instructions on how to render them in the **Style JSON** on the left and the **rendered live map** on the right. The map is displayed in your browser after Mapbox GL draws the final map using the style JSON and the tilesets it refers to.
+样式文档或样式JSON，包含地图配色者使用的样式规则，用来显示浏览器或设备中的地图。 在这个示例中，你可以看到样式的数据和图像，以及呈现在左侧的**样式 JSON** 和右侧的**显示实时地图** 中如何显示它们的说明. 在Mapbox GL使用样式JSON及其相应的瓦片集绘制最终地图后，地图将显示在浏览器中.
 
-## How map styles work
+## 地图样式是如何工作的
 
-You must write style JSON according to a strict specification for the renderer to interpret it and display the map in your browser.
+你必须严格按照规范编写JSON样式，以便渲染器去解释它并在浏览器中显示地图.
 
-### Mapbox Style Specification
+### Mapbox 样式规范
 
-The [Mapbox Style Specification](https://www.mapbox.com/mapbox-gl-style-spec/) defines the information that should be included in a style document for the renderer to display the map, including the title, values for the initial [camera](/help/glossary/camera/) position, sources and other resources used in the style, and the styling rules for the map's layers. The complete requirements are listed in the Mapbox Style Specification, but some of the key concepts to understand are:
+[Mapbox 样式规范](https://www.mapbox.com/mapbox-gl-style-spec/) 定义样式文档中应包含的信息，供渲染器显示地图，包括标题，初始 [相机](/help/glossary/camera/) 位置的值, 样式中使用的源和其他资源，以及地图图层的样式规则。 完整的要求都列在Mapbox样式规范中，其中一些需要理解的关键概念有:
 
-The map that you see in your browser or on your device is the result of applying **style rules** (Style JSON) to **data sources** (usually map tiles or GeoJSON) to render a complete map. In the language of the Mapbox Style Specification, data sources are called **sources** and the style rules you apply to that data are organized into **layers**. You cannot create a map without specifying both sources and layers.
+你在浏览器或设备上看到的地图是将 **样式规则** (样式JSON)应用于 **数据源** (通常是地图图块或GeoJSON) 以呈现完整地图的结果。 在Mapbox样式规范的语言中，数据源称为 **源** ，数据的样式规则被组织为 **图层**. 如果不指定源和图层，则无法创建地图.
 
-- [**Sources**](https://www.mapbox.com/mapbox-gl-js/style-spec/#sources). Sources tell the renderer what kind of data you would like to include and where to find it.
-- [**Layers**](https://www.mapbox.com/mapbox-gl-js/style-spec/#layers). A layer is a styled representation of the data in a source. It includes information about how the layer should appear on the map, including color, opacity, font, and more.
+- [**Sources**](https://www.mapbox.com/mapbox-gl-js/style-spec/#sources). 数据源告诉渲染器你想要包含哪种数据以及在哪里找到它.
+- [**Layers**](https://www.mapbox.com/mapbox-gl-js/style-spec/#layers). 一个图层是代表数据源中数据的样式。 它包含地图上图层显示方式的信息，包括颜色，透明度，字体等.
 
-If you are using any icons, images, or fonts in your map, your style will need to include a `sprite` or `glyphs` property.
+如果你要在地图中使用图标，图像或字体，那你的样式将需要包含一个 `sprite` 或`glyphs` 属性.
 
-- [**Sprite**](https://www.mapbox.com/mapbox-gl-js/style-spec/#sprite). Any icons or images in your style will need to be stored in a sprite. Read more about [how sprites work](/help/glossary/sprite).
-- [**Glyphs**](https://www.mapbox.com/mapbox-gl-js/style-spec/#glyphs). Glyphs are used to display the fonts you are using in your style. A style's glyphs property provides a URL template for loading signed-distance-field glyph sets in `PBF` format.
+- [**Sprite**](https://www.mapbox.com/mapbox-gl-js/style-spec/#sprite). 样式中的所有图标或图像都需要存储在sprite. 获取更多 [sprites 是怎样工作的](/help/glossary/sprite).
+- [**Glyphs**](https://www.mapbox.com/mapbox-gl-js/style-spec/#glyphs). 字形用于显示样式中的子图。样式中字形的属性提供一个URL模板，用以`PBF` 格式加载符号-距离-字段的字形集.
 
-### Using styles
+### 使用样式
 
-Map styles work with [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/), the Mapbox Maps SDKs for [Android](https://docs.mapbox.com/android/maps/overview/) and [iOS](https://docs.mapbox.com/ios/maps/overview/), and any third party software designed to read Mapbox styles. Style rules and tilesets are combined and rendered completely on the computer or mobile device that has requested them. Because styles are designed to work with GL-based renderers, you can alter your style programmatically after the map has been loaded.
+地图样式适用于 [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/), Mapbox地图SDKs 的[Android](https://docs.mapbox.com/android/maps/overview/) 和[iOS](https://docs.mapbox.com/ios/maps/overview/), 以及任何可以读取mapbox样式的第三方软件。样式规则和瓦片集会组合并完全呈现在被请求的计算机或移动设备上。 由于样式设计为与基于GL的渲染器一起使用，因此可以在加载地图后以编程方式更改样式.
 
-### Data-driven styles
+### 数据驱动的样式
 
-Data-driven styles allow you to change a layer's style based on properties in the layer's source. For example, you might create a data-driven style rule that sets the color of states in the US based on the population of each state.
+数据驱动的样式允许你根据图层源中的属性更改图层的样式。 例如，创建一个数据驱动的样式规则，该规则根据每个州的人口设置美国的州的颜色.
 
 <div class='grid grid--gut6'>
   <div class='col col--6 pt12 pr12'>
-    <strong>Get started with Mapbox GL JS expressions</strong>: In <a href='/help/tutorials/mapbox-gl-js-expressions/'>this tutorial</a>, each circle is a historical landmark. The size of the circle is the age of the landmark and zoom interpolation is used to create a smooth user experience.
+    <strong>Mapbox GL JS 表达式入门</strong>: 在<a href='/help/tutorials/mapbox-gl-js-expressions/'>这个教程中</a>, 每个圆圈代表一个历史性地表. 圆的大小是地标的年龄，缩放插值用于创建流畅的用户体验.
   </div>
   <div class='col col--6'>
-    <img class='mt0' src='/help/img/gl-js/mapbox-gl-js-expressions.png' alt='graduated circle map with circles of varying sizes'>
+    <img class='mt0' src='/help/img/gl-js/mapbox-gl-js-expressions.png' alt='不同大小的圆圈渐变构成圆圈图'>
   </div>
   <div class='col col--6 pt12 pr12'>
-    <strong>Choropleth map</strong>: In a choropleth map, a 'fill' layer changes color based on data properties.  In <a href='/help/tutorials/choropleth-studio-gl-pt-1/'>this tutorial</a>, the color of a state changes based on the population in the data.
+    <strong>等值区域图</strong>: 在等值区域图中， '填充' 图层会根据数据属性更改颜色.  在<a href='/help/tutorials/choropleth-studio-gl-pt-1/'>这个教程中</a>, 一个州的颜色是根据人口数据的变化而变化的.
   </div>
   <div class='col col--6'>
-    <img class='mt0' class='fr' src='/help/img/screenshots/choropleth-160809.png' alt='choropleth map with each state in the United States colored according to a data property'>
+    <img class='mt0' class='fr' src='/help/img/screenshots/choropleth-160809.png' alt='根据数据属性对美国各州的等值线图进行着色'>
   </div>
   <div class='col col--6 pt12 pr12'>
-    <strong>Colored line map</strong>: In a colored line map, a line layer changes color based on data properties.  In this example, the color of a flight path changes based on the difference between local time at the flight's origin and destination.
+    <strong>彩线地图</strong>: 在彩线图中，线图层会根据数据属性更改颜色。 在此示例中，飞行路径的颜色根据航班起点和目的地的当地时间之间的差异而变化.
   </div>
   <div class='col col--6'>
-    <img class='mt0' class='fr' src='/help/img/screenshots/timezone-flights.png' alt='colored line map showing flight paths'>
+    <img class='mt0' class='fr' src='/help/img/screenshots/timezone-flights.png' alt='彩线图显示飞行路径'>
   </div>
   <div class='col col--6 pt12 pr12'>
-    <strong>3D Building map</strong>: Using a fill-extrusion layer, extrude buildings in 3D based on data properties. In <a href='https://www.mapbox.com/mapbox-gl-js/example/3d-buildings/'>this example</a>, the extrusion height of the building changes based on the "height" and "min_height" of the building polygon.
+    <strong>3D 建图</strong>: 使用填充-拉伸新建图层, 基于数据属性在3D中新建建筑物. 在 <a href='https://www.mapbox.com/mapbox-gl-js/example/3d-buildings/'>这个例子中</a>, 建筑物的拉伸高度根据建筑物多边形的“高度”和“最低高度”而变化.
   </div>
   <div class='col col--6'>
-    <img class='mt0' class='fr' src='/help/img/screenshots/3D_buildings_example_dds.png' alt='map showing 3D buildings where height is assigned according to a data property'>
+    <img class='mt0' class='fr' src='/help/img/screenshots/3D_buildings_example_dds.png' alt='显示根据数据属性分配高度的3D建筑物的地图'>
   </div>
 </div>
 
-#### Required style sheet objects for data-driven styles
+#### 数据驱动样式所需的样式表对象
 
-The value of any layout property, paint property, or filter within a style sheet may be specified as an expression. With [expressions](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions), you can style data with multiple feature properties at once, apply conditional logic, and manipulate data with arithmetic and string operations for a more sophisticated relationship between your data and how it is styled. Below is an example of the value of a layout property using a [match expression](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-match) to display a different icon image depending on the value of the `marker-number` property in the data -
+样式表中任何布局属性，绘制属性或过滤器的值都可以指定为表达式. 使用 [表达式](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions), 可以同时为具有多个要素属性的数据设置样式，应用条件逻辑，并使用算术和字符串操作数据以获得数据与样式之间更复杂的关系. 下面是使用[匹配表达式](https://www.mapbox.com/mapbox-gl-js/style-spec#expressions-match) 显示不同图标图像的布局属性值的示例，具体取决于数据中`marker-number` 属性的值 -
 
 ```
 "layout": {
@@ -90,24 +90,24 @@ The value of any layout property, paint property, or filter within a style sheet
 }
 ```
 
-The many types of expressions can be explored further within the [Mapbox Style Specification](https://www.mapbox.com/mapbox-gl-js/style-spec) and in the examples like [Getting started with expressions](/help/tutorials/mapbox-gl-js-expressions/) and [Make a heatmap with Mapbox GL JS](/help/tutorials/make-a-heatmap-with-mapbox-gl-js/).
+可以在[Mapbox 样式规范](https://www.mapbox.com/mapbox-gl-js/style-spec) 和[表达式入门](/help/tutorials/mapbox-gl-js-expressions/) 以及 [用Mapbox GL JS制作热力图](/help/tutorials/make-a-heatmap-with-mapbox-gl-js/)的示例中进一步探索多种类型的表达式.
 
-## Creating map styles
+## 创建地图样式
 
-You can use the Mapbox Studio style editor to generate style JSON, write it directly, or use the Mapbox Styles API to read and change map styles, fonts, and images.
+你可以使用Mapbox Studio样式编辑器生成样式JSON，直接编写它，或使用Mapbox样式API来读取和更改地图样式，字体和图像.
 
 ### Mapbox Studio
 
-The Mapbox Studio style editor is a visual interface for creating and editing a style according to the Mapbox Style Specification. You can learn more about how to create and edit styles in the [Mapbox Studio Manual](https://www.mapbox.com/studio-manual/reference/styles/) style section.
+Mapbox Studio 样式编辑器是一个可视化界面，用于根据Mapbox样式规范创建和编辑样式. 你可以在[Mapbox Studio 手册](https://www.mapbox.com/studio-manual/reference/styles/) 的样式部分了解有关如何创建和编辑样式的更多信息.
 
 ### Cartogram
 
-Use [Cartogram](https://apps.mapbox.com/cartogram/), a drag-and-drop tool, to create a custom map in seconds. Upload a picture, select the colors you want to use, and create a map style that fits your brand. Your new map style will be ready to use on a website or in a mobile application. You can also open it in the Mapbox Studio style editor to continue customizing the style or add custom data.
+用拖放工具 [Cartogram](https://apps.mapbox.com/cartogram/)可在几秒钟内创建自定义地图。 上传图片，选择你想要使用的颜色，并创建适合你品牌的地图样式. 新地图样式可以在网站或移动应用程序中使用，也可以在Mapbox Studio样式编辑器中打开它以继续自定义样式或添加自定义数据.
 
-### Mapbox Styles API
+### Mapbox 地图 API
 
-The Mapbox Styles API lets you read and change map styles, fonts, and icons. This API is the basis for Mapbox Studio. If you use Mapbox Studio, Mapbox GL JS, or the Mapbox Mobile SDKs, you're already using the Styles API. You can learn more about the Styles API in our [API documentation](https://docs.mapbox.com/api/maps/#styles).
+Mapbox样式API允许您阅读和更改地图样式，字体和图标。 API是Mapbox Studio的基础。 如果你使用Mapbox Studio，Mapbox GL JS或Mapbox Mobile SDK，那么你已经在使用Styles API。 可以在[API 文档](https://docs.mapbox.com/api/maps/#styles)中了解有关样式 API的更多信息.
 
-### Mapbox Style Specification
+### Mapbox 样式规范
 
-You can create a style from scratch using a text editor and following the [Mapbox Style Specification](https://www.mapbox.com/mapbox-gl-js/style-spec).
+你可以使用文本编辑器从头开始创建样式并遵循 [Mapbox 样式规范](https://www.mapbox.com/mapbox-gl-js/style-spec).
